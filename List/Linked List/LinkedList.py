@@ -52,3 +52,47 @@ class ListADT(ABC):
     def replace(self, index, elem):
         """Replaces node at <index> with <elem>"""
         pass
+
+
+class LinkedList(ListADT):
+    class Node:
+
+        def __init__(self, elem=None, next=None):
+            self._elem = elem
+            self._next = next
+
+        def __str__(self):
+            if self._next is None:
+                return self._elem.__str__()
+            else:
+                return self._elem.__str__() + "->"
+
+    def insert(self, index, elemento):
+        pass
+
+    def remove(self, elem):
+        pass
+
+    def count(self, elem):
+        pass
+
+    def clear(self):
+        pass
+
+    def index(self, elem):
+        pass
+
+    def length(self):
+        pass
+
+    def remove_all(self, elem):
+        pass
+
+    def remove_at(self, index):
+        pass
+
+    def append(self, elem):
+        pass
+
+    def replace(self, index, elem):
+        pass

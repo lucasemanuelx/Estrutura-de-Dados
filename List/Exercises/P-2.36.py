@@ -14,6 +14,7 @@ fish dies (i.e., it disappears).
 import random
 from abc import ABC, abstractmethod
 
+
 class Animal(ABC):
 
     @abstractmethod
@@ -23,30 +24,30 @@ class Animal(ABC):
     @abstractmethod
     def move(self, next_spot):
         pass
-    
+
     @abstractmethod
     def eat(self, next_animal):
         pass
-    
+
     @abstractmethod
     def have_baby(self, next_animal):
         pass
-    
+
 
 class Bear(Animal):
-     
+
     def __init__(self, index):
         self.index = index
-        
+
     def set_index(self, new_index):
         self.index = new_index
-        
+
     def move(self, next_spot):
         if next_spot:
             return False
         else:
             return True
-    
+
     def eat(self, next_animal):
         if not isinstance(next_animal, Bear):
             return True
@@ -58,22 +59,22 @@ class Bear(Animal):
             return True
         else:
             return False
-        
+
 
 class Fish(Animal):
-     
+
     def __init__(self, index):
         self.index = index
-        
+
     def set_index(self, new_index):
         self.index = new_index
-        
+
     def move(self, next_spot):
         if next_spot:
             return False
         else:
             return True
-    
+
     def eat(self, next_animal):
         pass
 
@@ -82,5 +83,6 @@ class Fish(Animal):
             return True
         else:
             return False
-                
+
+
 if __name__ == "__main__":
