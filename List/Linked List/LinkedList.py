@@ -115,26 +115,44 @@ class LinkedList(ListADT):
             if self._head._elem == elem:  # removing from head
                 self._head = aux
                 found_element = True
+                self._length -= 1
             while prev._next and not found_element:
                 if aux._elem == elem:
                     prev._next = aux._next
                     aux = aux._next
                     found_element = True
+                    self._length -= 1
                 else:
                     prev = aux
                     aux = aux._next
 
     def count(self, elem):
-        pass
+        count = 0
+        aux = self._head
+        while aux:
+            if aux._elem == elem:
+                count += 1
+            aux = aux._next
+        return count
 
     def clear(self):
-        pass
+        self._head = None
+        self._tail = self._head
+        self._length = 0
 
     def index(self, elem):
-        pass
+        aux = self._head
+        found_element = False
+        index = -1
+        while aux and not found_element:
+            if aux._elem == elem:
+                found_element = True
+            index += 1
+            aux = aux._next
+        return index
 
     def length(self):
-        pass
+        return self._length
 
     def remove_all(self, elem):
         pass
@@ -165,20 +183,22 @@ if __name__ == "__main__":
     ll = LinkedList()
     ll.insert(8, 0)
     print(ll)
+    ll.insert(0, 5)
+    print(ll)
+    ll.insert(1, 8)
+    print(ll)
+    ll.insert(3, 2)
     ll.insert(0, 3)
+    ll.insert(1, 0)
+    ll.insert(50, 0)
     print(ll)
-    ll.insert(1, 4)
-    print(ll)
-    ll.insert(3, 5)
-    ll.insert(0, 0)
-    ll.insert(1, 1)
-    ll.insert(50, 50)
-    print(ll)
-    ll.remove(0)
+    print(ll.length())
+    # ll.remove(0)
     ll.remove(1)
     ll.remove(3)
     ll.remove(4)
-    ll.remove(1)
+    # ll.remove(1)
     ll.remove(5)
     ll.remove(0)
+    print(ll.length())
     print(ll)
