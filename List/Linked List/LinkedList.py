@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class ListADT(ABC):
 
     @abstractmethod
-    def insert(self, index, elemento):
+    def insert(self, index, elem):
         """Inserts <elem> in <index>"""
         pass
 
@@ -67,8 +67,43 @@ class LinkedList(ListADT):
             else:
                 return self._elem.__str__() + "->"
 
-    def insert(self, index, elemento):
-        pass
+    def __init__(self):
+        self._head = None
+        self._tail = self._head
+        self._length = 0
+
+    def insert(self, index, elem):
+        new_node = self.Node(elem)
+        if self._head is None:  # insert in empty list
+            self._head = new_node
+            self._tail = new_node
+        else:
+            if index == 0:
+                self.__insert_start(new_node)
+            elif 0 < index < self._length:
+                self.__insert_middle(index, new_node)
+            elif index >= self._length:
+                self.__insert_end(new_node)
+        self._length += 1
+
+    def __insert_start(self, new_node):
+        new_node._next = self._head
+        self._head = new_node
+
+    def __insert_middle(self, index, new_node):
+        prev = self._head
+        aux = prev._next
+        for i in range(index - 1):
+            prev = aux
+            aux = aux._next
+        prev._next = new_node
+        new_node._next = aux
+
+    def __insert_end(self, new_node):
+        aux = self._head
+        while aux._next:
+            aux = aux._next
+        aux._next = new_node
 
     def remove(self, elem):
         pass
@@ -96,3 +131,30 @@ class LinkedList(ListADT):
 
     def replace(self, index, elem):
         pass
+
+    def __str__(self):
+        if self._head is not None:
+            result = ''
+            aux = self._head
+            result += aux.__str__()
+            while aux._next:
+                aux = aux._next
+                result += aux.__str__()
+            return result
+        else:
+            return '||'
+
+
+if __name__ == "__main__":
+    ll = LinkedList()
+    ll.insert(8, 1)
+    print(ll)
+    ll.insert(0, 3)
+    print(ll)
+    ll.insert(1, 4)
+    print(ll)
+    ll.insert(3, 5)
+    ll.insert(0, 0)
+    ll.insert(1, 1)
+    ll.insert(50, 50)
+    print(ll)
