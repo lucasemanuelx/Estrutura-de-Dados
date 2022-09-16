@@ -106,7 +106,23 @@ class LinkedList(ListADT):
         aux._next = new_node
 
     def remove(self, elem):
-        pass
+        if self._head is None:  # removing in empty list
+            pass
+        else:
+            found_element = False
+            prev = self._head
+            aux = prev._next
+            if self._head._elem == elem:  # removing from head
+                self._head = aux
+                found_element = True
+            while prev._next and not found_element:
+                if aux._elem == elem:
+                    prev._next = aux._next
+                    aux = aux._next
+                    found_element = True
+                else:
+                    prev = aux
+                    aux = aux._next
 
     def count(self, elem):
         pass
@@ -147,7 +163,7 @@ class LinkedList(ListADT):
 
 if __name__ == "__main__":
     ll = LinkedList()
-    ll.insert(8, 1)
+    ll.insert(8, 0)
     print(ll)
     ll.insert(0, 3)
     print(ll)
@@ -157,4 +173,12 @@ if __name__ == "__main__":
     ll.insert(0, 0)
     ll.insert(1, 1)
     ll.insert(50, 50)
+    print(ll)
+    ll.remove(0)
+    ll.remove(1)
+    ll.remove(3)
+    ll.remove(4)
+    ll.remove(1)
+    ll.remove(5)
+    ll.remove(0)
     print(ll)
