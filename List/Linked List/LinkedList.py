@@ -194,7 +194,10 @@ class LinkedList(ListADT):
         self._length += 1
 
     def replace(self, index, elem):
-        
+        aux = self._head
+        for i in range(index-1):
+            aux = aux._next
+        aux._elem = elem
 
     def length(self):
         return self._length
@@ -210,22 +213,3 @@ class LinkedList(ListADT):
             return result
         else:
             return '||'
-
-
-if __name__ == "__main__":
-    ll = LinkedList()
-    ll.insert(0, 7)
-    ll.insert(0, 6)
-    ll.insert(0, 5)
-    ll.insert(0, 4)
-    ll.insert(0, 3)
-    ll.insert(0, 2)
-    ll.append(500)
-    ll.insert(0, 1)
-    print(ll)
-    print(ll.length())
-    # ll.remove_all(3)
-    ll.remove_at(0)
-    ll.append(89)
-    print(ll.length())
-    print("lista", ll)
