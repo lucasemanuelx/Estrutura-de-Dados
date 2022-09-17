@@ -106,16 +106,15 @@ class LinkedList(ListADT):
         aux._next = new_node
 
     def remove(self, elem):
-        if self._head is None:  # removing in empty list
+        if self._head is None:  # removing from empty list
             pass
         else:
             found_element = False
             prev = self._head
             aux = prev._next
             if self._head._elem == elem:  # removing from head
-                self._head = aux
+                self.__remove_head()
                 found_element = True
-                self._length -= 1
             while prev._next and not found_element:
                 if aux._elem == elem:
                     prev._next = aux._next
@@ -125,6 +124,42 @@ class LinkedList(ListADT):
                 else:
                     prev = aux
                     aux = aux._next
+
+    def remove_all(self, elem):
+        if self._head is None:  # removing from empty list
+            pass
+        else:
+            while self._head._elem == elem:
+                self.__remove_head()
+            prev = self._head
+            aux = prev._next
+            while aux:
+                if aux._elem == elem:
+                    prev._next = aux._next
+                    aux = aux._next
+                    self._length -= 1
+                else:
+                    prev = aux
+                    aux = aux._next
+
+    def remove_at(self, index):
+        if self._head is None:
+            pass
+        else:
+            prev = self._head
+            aux = prev._next
+            if index == 0:
+                self.__remove_head()
+            else:
+                for i in range(index-1):
+                    prev = aux
+                    aux = aux._next
+                prev._next = aux._next
+                self._length -= 1
+
+    def __remove_head(self):
+        self._head = self._head._next
+        self._length -= 1
 
     def count(self, elem):
         count = 0
@@ -151,20 +186,14 @@ class LinkedList(ListADT):
             aux = aux._next
         return index
 
-    def length(self):
-        return self._length
-
-    def remove_all(self, elem):
-        pass
-
-    def remove_at(self, index):
-        pass
-
     def append(self, elem):
         pass
 
     def replace(self, index, elem):
         pass
+
+    def length(self):
+        return self._length
 
     def __str__(self):
         if self._head is not None:
@@ -181,24 +210,16 @@ class LinkedList(ListADT):
 
 if __name__ == "__main__":
     ll = LinkedList()
-    ll.insert(8, 0)
-    print(ll)
+    ll.insert(0, 7)
+    ll.insert(0, 6)
     ll.insert(0, 5)
-    print(ll)
-    ll.insert(1, 8)
-    print(ll)
-    ll.insert(3, 2)
+    ll.insert(0, 4)
     ll.insert(0, 3)
-    ll.insert(1, 0)
-    ll.insert(50, 0)
+    ll.insert(0, 2)
+    ll.insert(0, 1)
     print(ll)
     print(ll.length())
-    # ll.remove(0)
-    ll.remove(1)
-    ll.remove(3)
-    ll.remove(4)
-    # ll.remove(1)
-    ll.remove(5)
-    ll.remove(0)
+    # ll.remove_all(3)
+    ll.remove_at(0)
     print(ll.length())
-    print(ll)
+    print("lista", ll)
