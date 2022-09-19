@@ -94,16 +94,22 @@ class Fish(Animal):
 class River:
     def __init__(self, length=15):
         self._data = [None] * length
-        self.populate()
+        self._aux = []
+        self.__populate()
 
-    def populate(self):
-        aux = list(range(len(self._data)))
-        random.shuffle(aux)
-        for count, ind in enumerate(aux):
-            if count % 3 == 0:
-                self._data[ind] = Bear(ind)
-            if count % 5 == 1:
-                self._data[ind] = Fish(ind)
+    def __populate(self):
+        self._aux = list(range(len(self._data)))
+        random.shuffle(self._aux)
+        self.__generate_animal(Bear)
+        self.__generate_animal(Fish)
+
+    def __generate_animal(self, animal):
+        __qnt = round(len(self._data) * 0.35)
+        print(__qnt)
+        for i in range(__qnt):
+            ind = random.choice(self._aux)
+            self._data[ind] = animal(ind)
+            self._aux.remove(ind)
 
     def __str__(self):
         return self._data.__str__() + "\n" + "----------"
