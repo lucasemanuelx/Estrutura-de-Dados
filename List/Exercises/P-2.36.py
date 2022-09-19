@@ -60,6 +60,9 @@ class Bear(Animal):
         else:
             return False
 
+    def __repr__(self):
+        return "Bear(%d)" % self.index
+
 
 class Fish(Animal):
 
@@ -84,5 +87,28 @@ class Fish(Animal):
         else:
             return False
 
+    def __repr__(self):
+        return "Fish(%d)" % self.index
+
+
+class River:
+    def __init__(self, length=15):
+        self._data = [None] * length
+        self.populate()
+
+    def populate(self):
+        aux = list(range(len(self._data)))
+        random.shuffle(aux)
+        for count, ind in enumerate(aux):
+            if count % 3 == 0:
+                self._data[ind] = Bear(ind)
+            if count % 5 == 1:
+                self._data[ind] = Fish(ind)
+
+    def __str__(self):
+        return self._data.__str__() + "\n" + "----------"
+
 
 if __name__ == "__main__":
+    r = River()
+    print(r)
