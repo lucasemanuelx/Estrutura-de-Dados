@@ -78,30 +78,32 @@ class DoublyLinkedList(ListADT):
         new_node = self._Node(elem)
         if index > self._length:
             index = self._length
-        if self._length == 0:
-            self.__insert_in_empty_list(new_node)
-        else:
-            self.__insert_middle(new_node, index)
-
-    def __insert_in_empty_list(self, new_node):
-        self._header._next = new_node
-        self._trailer._prev = new_node
-        new_node._next = self._trailer
-        new_node._prev = self._header
-        self._length += 1
+        self.__insert_middle(new_node, index)
 
     def __insert_middle(self, new_node, index):
         aux = self._header
-        for i in range(index + 1):
+        for i in range(index):
             aux = aux._next
-        aux._prev._next = new_node
-        aux._prev = new_node
-        new_node._next = aux
-        new_node._prev = aux._prev
+        new_node._next = aux._next
+        new_node._prev = aux
+        aux._next._prev = new_node
+        aux._next = new_node
         self._length += 1
 
     def remove(self, elem):
-        pass
+        if self._length == 0:
+            pass
+        aux = self._header
+        found_elem = False
+        while aux._next is not None and not found_elem:
+            if aux._elem == elem:
+                aux._prev._next = aux._next
+                aux._next._prev = aux._prev
+                aux = aux._next
+                self._length -= 1
+                found_elem = True
+            else:
+                aux = aux._next
 
     def remove_all(self, elem):
         pass
@@ -148,5 +150,5 @@ if __name__ == "__main__":
     dll.insert(2, 4)
     dll.insert(50, 8)
     dll.insert(65, 2)
-    dll.remove(9)
+    dll.remove(5)
     print(dll)
