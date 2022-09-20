@@ -91,7 +91,7 @@ class DoublyLinkedList(ListADT):
         self._length += 1
 
     def remove(self, elem):
-        if self._length == 0:
+        if self._header._next == self._trailer:
             pass
         aux = self._header
         found_elem = False
@@ -106,10 +106,31 @@ class DoublyLinkedList(ListADT):
                 aux = aux._next
 
     def remove_all(self, elem):
-        pass
+        if self._header._next == self._trailer:
+            pass
+        else:
+            aux = self._header
+            while aux._next is not None:
+                if aux._elem == elem:
+                    aux._prev._next = aux._next
+                    aux._next._prev = aux._prev
+                    aux = aux._next
+                    self._length -= 1
+                else:
+                    aux = aux._next
 
     def remove_at(self, index):
-        pass
+        if index >= self._length:
+            index = self._length-1
+        if self._header._next == self._trailer:
+            pass
+        else:
+            aux = self._header
+            for i in range(index+1):
+                aux = aux._next
+            aux._prev._next = aux._next
+            aux._next._prev = aux._prev
+            self._length -= 1
 
     def count(self, elem):
         pass
@@ -145,10 +166,11 @@ class DoublyLinkedList(ListADT):
 if __name__ == "__main__":
     dll = DoublyLinkedList()
     dll.insert(0, 5)
-    dll.insert(0, 9)
-    dll.insert(1, 3)
-    dll.insert(2, 4)
+    dll.insert(0, 3)
+    dll.insert(1, 5)
+    dll.insert(2, 3)
     dll.insert(50, 8)
-    dll.insert(65, 2)
-    dll.remove(5)
+    dll.insert(65, 3)
+    print(dll)
+    dll.remove_at(6)
     print(dll)
