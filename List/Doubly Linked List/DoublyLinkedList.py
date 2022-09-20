@@ -55,7 +55,6 @@ class ListADT(ABC):
 
 
 class DoublyLinkedList(ListADT):
-
     class _Node:
         def __init__(self, elem=None, next=None, prev=None):
             self._elem = elem
@@ -63,7 +62,7 @@ class DoublyLinkedList(ListADT):
             self._prev = prev
 
         def __str__(self):
-            if self._next is None:
+            if self._next._next is None:
                 return self._elem.__str__()
             else:
                 return self._elem.__str__() + "<->"
@@ -73,10 +72,33 @@ class DoublyLinkedList(ListADT):
         self._trailer = self._Node()
         self._header._next = self._trailer
         self._trailer._prev = self._header
-        self.length = 0
+        self._length = 0
 
     def insert(self, index, elem):
-        pass
+        new_node = self._Node(elem)
+        if index > self._length:
+            index = self._length
+        if self._length == 0:
+            self.__insert_in_empty_list(new_node)
+        else:
+            self.__insert_middle(new_node, index)
+
+    def __insert_in_empty_list(self, new_node):
+        self._header._next = new_node
+        self._trailer._prev = new_node
+        new_node._next = self._trailer
+        new_node._prev = self._header
+        self._length += 1
+
+    def __insert_middle(self, new_node, index):
+        aux = self._header
+        for i in range(index + 1):
+            aux = aux._next
+        aux._prev._next = new_node
+        aux._prev = new_node
+        new_node._next = aux
+        new_node._prev = aux._prev
+        self._length += 1
 
     def remove(self, elem):
         pass
@@ -104,3 +126,27 @@ class DoublyLinkedList(ListADT):
 
     def length(self):
         pass
+
+    def __str__(self):
+        if self._header:
+            result = ''
+            aux = self._header._next
+            result += aux.__str__()
+            while aux._next is not self._trailer:
+                aux = aux._next
+                result += aux.__str__()
+            return result
+        else:
+            return '||'
+
+
+if __name__ == "__main__":
+    dll = DoublyLinkedList()
+    dll.insert(0, 5)
+    dll.insert(0, 9)
+    dll.insert(1, 3)
+    dll.insert(2, 4)
+    dll.insert(50, 8)
+    dll.insert(65, 2)
+    dll.remove(9)
+    print(dll)
