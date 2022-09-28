@@ -39,3 +39,40 @@ class Stack(StackADT):
     def __init__(self):
         self._head = None
         self._length = 0
+
+    def push(self, elem):
+        new_node = self._Node(elem)
+        new_node._next = self._head
+        self._head = new_node
+        self._length += 1
+
+    def pop(self):
+        if not self._head:
+            raise Exception("The stack is empty")
+        popped = self._head
+        self._head = self._head._next
+        self._length -= 1
+        return popped
+
+    def top(self):
+        if not self._head:
+            raise Exception("The stack is empty")
+        return self._head._elem
+
+    def is_empty(self):
+        return self._length == 0
+
+    def __len__(self):
+        return self._length
+
+    def __str__(self):
+        if self._head:
+            result = ''
+            aux = self._head
+            result += aux.__str__()
+            while aux._next:
+                aux = aux._next
+                result += aux.__str__()
+            return result
+        else:
+            return '||'
