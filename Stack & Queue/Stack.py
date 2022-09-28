@@ -24,4 +24,18 @@ class StackADT(ABC):
         pass
 
 
+class Stack(StackADT):
+    class _Node:
+        def __init__(self, elem=None, next=None):
+            self._elem = elem
+            self._next = next
 
+        def __str__(self):
+            if self._next is None:
+                return self._elem.__str__()
+            else:
+                return self._elem.__str__() + "->"
+
+    def __init__(self):
+        self._head = None
+        self._length = 0
