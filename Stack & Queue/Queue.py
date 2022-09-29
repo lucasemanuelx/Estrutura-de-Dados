@@ -40,3 +40,40 @@ class Queue(QueueADT):
         self._head = None
         self._tail = None
         self._length = 0
+
+    def enqueue(self, elem):
+        new_node = self._Node(elem)
+        if self._length == 0:
+            self._head = new_node
+        else:
+            self._tail._next = new_node
+        self._tail = new_node
+        self._length += 1
+
+    def dequeue(self):
+        if not self._head:
+            raise Exception("The queue is empty")
+        popped = self._head
+        self._head = self._head._next
+        self._length -= 1
+        return popped
+
+    def first(self):
+        if not self._head:
+            raise Exception("The queue is empty")
+        return self._head._elem
+
+    def is_empty(self):
+        return self._length == 0
+
+    def __str__(self):
+        if self._head:
+            result = ''
+            aux = self._head
+            result += aux.__str__()
+            while aux._next:
+                aux = aux._next
+                result += aux.__str__()
+            return result
+        else:
+            return '||'
