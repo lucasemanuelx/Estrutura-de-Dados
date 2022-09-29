@@ -62,7 +62,7 @@ class DoublyLinkedList(ListADT):
             self._prev = prev
 
         def __str__(self):
-            if self._next._next is None:
+            if self._next._elem is None:
                 return self._elem.__str__()
             else:
                 return self._elem.__str__() + "<->"
@@ -98,7 +98,7 @@ class DoublyLinkedList(ListADT):
         while aux._next is not None and not found_elem:
             if aux._elem == elem:
                 aux._prev._next = aux._next
-                aux._next._prev = aux._prev
+                aux._next._next = aux._prev
                 aux = aux._next
                 self._length -= 1
                 found_elem = True
@@ -113,7 +113,7 @@ class DoublyLinkedList(ListADT):
             while aux._next is not None:
                 if aux._elem == elem:
                     aux._prev._next = aux._next
-                    aux._next._prev = aux._prev
+                    aux._next._next = aux._prev
                     aux = aux._next
                     self._length -= 1
                 else:
@@ -121,22 +121,32 @@ class DoublyLinkedList(ListADT):
 
     def remove_at(self, index):
         if index >= self._length:
-            index = self._length-1
+            index = self._length - 1
         if self._header._next == self._trailer:
             pass
         else:
             aux = self._header
-            for i in range(index+1):
+            for i in range(index + 1):
                 aux = aux._next
             aux._prev._next = aux._next
-            aux._next._prev = aux._prev
+            aux._next._next = aux._prev
             self._length -= 1
 
     def count(self, elem):
-        pass
+        count = 0
+        aux = self._header._next
+        while aux._elem:
+            if aux._elem == elem:
+                count += 1
+            aux = aux._next
+        return count
 
     def clear(self):
-        pass
+        self._header = self._Node()
+        self._trailer = self._Node()
+        self._header._next = self._trailer
+        self._trailer._prev = self._header
+        self._length = 0
 
     def index(self, elem):
         pass
@@ -151,7 +161,7 @@ class DoublyLinkedList(ListADT):
         pass
 
     def __str__(self):
-        if self._header:
+        if self._header._next is not self._trailer:
             result = ''
             aux = self._header._next
             result += aux.__str__()
@@ -173,4 +183,5 @@ if __name__ == "__main__":
     dll.insert(65, 3)
     print(dll)
     dll.remove_at(6)
+    print(dll.count(3))
     print(dll)
