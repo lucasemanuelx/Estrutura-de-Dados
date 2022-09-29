@@ -159,10 +159,17 @@ class DoublyLinkedList(ListADT):
         return count
 
     def append(self, elem):
-        pass
+        self.__insert_middle(self._Node(elem), self._length)
 
     def replace(self, index, elem):
-        pass
+        if self._header._next is self._trailer:
+            raise Exception("The list is empty!")
+        if index >= self._length:
+            index = self._length - 1
+        aux = self._header._next
+        for i in range(index):
+            aux = aux._next
+        aux._elem = elem
 
     def length(self):
         return self._length
