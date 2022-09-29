@@ -149,7 +149,14 @@ class DoublyLinkedList(ListADT):
         self._length = 0
 
     def index(self, elem):
-        pass
+        if self._header._next is self._trailer:
+            raise Exception("The list is empty!")
+        aux = self._header._next
+        count = 0
+        while aux._elem != elem:
+            aux = aux._next
+            count += 1
+        return count
 
     def append(self, elem):
         pass
@@ -158,7 +165,7 @@ class DoublyLinkedList(ListADT):
         pass
 
     def length(self):
-        pass
+        return self._length
 
     def __str__(self):
         if self._header._next is not self._trailer:
@@ -172,16 +179,3 @@ class DoublyLinkedList(ListADT):
         else:
             return '||'
 
-
-if __name__ == "__main__":
-    dll = DoublyLinkedList()
-    dll.insert(0, 5)
-    dll.insert(0, 3)
-    dll.insert(1, 5)
-    dll.insert(2, 3)
-    dll.insert(50, 8)
-    dll.insert(65, 3)
-    print(dll)
-    dll.remove_at(6)
-    print(dll.count(3))
-    print(dll)
